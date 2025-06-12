@@ -14,6 +14,24 @@ export default function Main() {
         setIngredients(prev => [...prev, newIngredient])
     }
 
+    function showIngridients(){
+        if(ingredients.length > 0){
+            return (
+                <section>
+                <h2>Ingredients on hand:</h2>
+                <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
+                <div className="get-recipe-container">
+                    <div>
+                        <h3>Ready for a recipe?</h3>
+                        <p>Generate a recipe from your list of ingredients.</p>
+                    </div>
+                    <button>Get a recipe</button>
+                </div>
+            </section>
+            )
+        }
+    }
+
     return (
         <main>
             <form action={addIngredient} className="add-ingredient-form">
@@ -25,9 +43,8 @@ export default function Main() {
                 />
                 <button>Add ingredient</button>
             </form>
-            <ul>
-                {ingredientsListItems}
-            </ul>
+            {showIngridients()}
+            
         </main>
     )
 }
