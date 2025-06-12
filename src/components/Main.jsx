@@ -14,12 +14,23 @@ export default function Main() {
         setIngredients(prev => [...prev, newIngredient])
     }
 
+    //show the list of ingridients only if it has something
     function showIngridients(){
         if(ingredients.length > 0){
             return (
                 <section>
                 <h2>Ingredients on hand:</h2>
                 <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
+                {showGetRecipe()}
+            </section>
+            )
+        }
+    }
+
+    //show the get recipy button only if you have more then 3 ingridients
+    function showGetRecipe(){
+        if(ingredients.length > 3){
+            return (
                 <div className="get-recipe-container">
                     <div>
                         <h3>Ready for a recipe?</h3>
@@ -27,7 +38,6 @@ export default function Main() {
                     </div>
                     <button>Get a recipe</button>
                 </div>
-            </section>
             )
         }
     }
