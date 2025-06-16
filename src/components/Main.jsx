@@ -7,9 +7,7 @@ export default function Main() {
     const [ingredients, setIngredients] = useState([])
     const [showRes, setShowRes] = useState(false)
 
-    const ingredientsListItems = ingredients.map(ingredient => (
-        <li key={ingredient}>{ingredient}</li>
-    ))
+    
 
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
@@ -34,8 +32,7 @@ export default function Main() {
                 <button>Add ingredient</button>
             </form>
             <IngredientsList
-            ingredientsLen = {ingredients.length}
-            ingredientsListItems = {ingredientsListItems}
+            ingredients = {ingredients}
             ShowRecipe = {ShowRecipe}
             />
             {showRes && <ClaudeRecipe/>}
