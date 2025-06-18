@@ -1,8 +1,24 @@
-import useState from "react"
+import { useState } from "react"
 
 export default function IngredientsList(props){
-    const ingredientsListItems = props.ingredients.map(ingredient => (
-        <li key={ingredient}>{ingredient}</li>
+    const [hoveredIngredient, setHoveredIngredient] = useState(null);
+
+  const ingredientsListItems = props.ingredients.map(ingredient => (
+    <li
+      key={ingredient}
+      className="ingredientItem"
+      style={{
+        border: hoveredIngredient === ingredient ? "2px solid #ff4d4d" : "2px solid transparent"
+      }}
+    >
+      {ingredient}
+      <button
+        className="removeIngredient"
+        onClick={() => props.removeIngredient(ingredient)}
+        onMouseEnter={() => setHoveredIngredient(ingredient)}
+        onMouseLeave={() => setHoveredIngredient(null)}
+      >X</button>
+        </li>
     ))
 
     //show the list of ingridients only if it has something

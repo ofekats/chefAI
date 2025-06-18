@@ -4,7 +4,7 @@ import { CohereClient } from 'cohere-ai';
 
 const hf =  new InferenceClient(process.env.HF_ACCESS_TOKEN);
 const cohere = new CohereClient({
-  token: process.env.COHERE_API_KEY, // Initialize with API key directly
+  token: process.env.COHERE_API_KEY, 
 });
 
 const SYSTEM_PROMPT = `

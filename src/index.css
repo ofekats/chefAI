@@ -108,3 +108,29 @@ ul.ingredients-list > li {
   cursor: pointer;
 }
 
+.removeIngredient {
+  margin-left: 15px;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.removeIngredient:hover {
+  color: darkred;
+}
+
+
+.ingredientItem {
+  padding: 8px 12px;
+  transition: border 0.3s ease;
+  border: 2px solid transparent;
+  max-width: 50%;
+}
+
+.removeIngredient:hover + 
+.ingredientItem:hover {
+  border: 2px solid #ff4d4d; 
+}

@@ -13,6 +13,14 @@ export default function Main() {
         setIngredients(prev => [...prev, newIngredient])
     }
 
+    function removeIngredient(ingredientToRemove) {
+        setIngredients(prev => prev.filter(ingredient => ingredient !== ingredientToRemove))
+    }
+
+    function removeAllIngredient() {
+        setIngredients([])
+    }
+
 
     async function GetRecipe(){
         setRecipe(await getRecipeFromMistral(ingredients))
@@ -34,6 +42,7 @@ export default function Main() {
             <IngredientsList
             ingredients = {ingredients}
             GetRecipe = {GetRecipe}
+            removeIngredient= {removeIngredient}
             />
             {recipe && <AIRecipe recipe={recipe}/>}
         </main>

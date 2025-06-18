@@ -7,7 +7,6 @@ export default function AIRecipe(props){
         <>
             <h1>Recipe from ai!</h1>
             <ReactMarkdown>{props.recipe}</ReactMarkdown>
-            {/* <section>{props.recipe}</section> */}
         </>
     )
 }
