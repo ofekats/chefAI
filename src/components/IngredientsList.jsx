@@ -1,7 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function IngredientsList(props){
     const [hoveredIngredient, setHoveredIngredient] = useState(null);
+
+    useEffect(() => {
+        setHoveredIngredient(null);
+    }, [props.ingredients]);
 
   const ingredientsListItems = props.ingredients.map(ingredient => (
     <li

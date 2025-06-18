@@ -138,6 +138,7 @@ ul.ingredients-list > li {
 .clearIngredients{
   border: none;
   background-color: transparent;
+  margin: 10px;
 }
 
 .clearIngredients:hover {
@@ -157,4 +158,21 @@ ul.ingredients-list > li {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   font-weight: bold;
   z-index: 9999;
+}
+
+
+.loading-overlay {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f0f0;
+  padding: 12px 24px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.loading-overlay img {
+  height: 150px;
 }
