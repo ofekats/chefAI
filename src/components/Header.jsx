@@ -2,8 +2,8 @@
 export default function Header(){
     return (
         <header>
-            <img className="header-logo" src="../images/chef-claude-icon.png" alt="chef-claude-icon"/>
-            <h1 className="header-text">Chef Claude</h1>
+            <img className="header-logo" src="../images/chef-icon.png" alt="chef-icon"/>
+            <h1 className="header-text">Chef AI</h1>
         </header>
     )
 }

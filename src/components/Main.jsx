@@ -1,5 +1,5 @@
 import { useState } from "react"
-import ClaudeRecipe from "./ClaudeRecipe"
+import AIRecipe from "./AIRecipe"
 import IngredientsList from "./IngredientsList"
 import getRecipeFromMistral from "../getRecipe"
 
@@ -39,7 +39,7 @@ export default function Main() {
             ingredients = {ingredients}
             ShowRecipe = {ShowRecipe}
             />
-            {showRes && <ClaudeRecipe recipe={recipe}/>}
+            {showRes && <AIRecipe recipe={recipe}/>}
         </main>
     )
 }
