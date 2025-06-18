@@ -27,6 +27,7 @@ export default function IngredientsList(props){
             <section>
             <h2>Ingredients on hand:</h2>
             <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
+            <button className="clearIngredients" onClick={props.removeAllIngredient}>clear all</button>
             {/* show the get recipy button only if you have more then 3 ingridients */}
             {props.ingredients.length > 3 && <div className="get-recipe-container">
                 <div>

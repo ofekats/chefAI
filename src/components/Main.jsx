@@ -43,6 +43,7 @@ export default function Main() {
             ingredients = {ingredients}
             GetRecipe = {GetRecipe}
             removeIngredient= {removeIngredient}
+            removeAllIngredient= {removeAllIngredient}
             />
             {recipe && <AIRecipe recipe={recipe}/>}
         </main>

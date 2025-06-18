@@ -134,3 +134,13 @@ ul.ingredients-list > li {
 .ingredientItem:hover {
   border: 2px solid #ff4d4d; 
 }
+
+.clearIngredients{
+  border: none;
+  background-color: transparent;
+}
+
+.clearIngredients:hover {
+  color: darkred;
+  border: 1px solid #ff4d4d;
+}
