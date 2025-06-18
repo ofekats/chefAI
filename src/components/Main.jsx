@@ -6,10 +6,7 @@ import getRecipeFromMistral from "../getRecipe"
 export default function Main() {
 
     const [ingredients, setIngredients] = useState([])
-    const [showRes, setShowRes] = useState(false)
-    const [recipe, setRecipe] = useState({})
-
-    
+    const [recipe, setRecipe] = useState()
 
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
@@ -17,10 +14,9 @@ export default function Main() {
     }
 
 
-    async function ShowRecipe(){
+    async function GetRecipe(){
         setRecipe(await getRecipeFromMistral(ingredients))
         console.log("recipe:" , recipe)
-        setShowRes(prev => !prev)
     }
 
     
@@ -37,9 +33,9 @@ export default function Main() {
             </form>
             <IngredientsList
             ingredients = {ingredients}
-            ShowRecipe = {ShowRecipe}
+            GetRecipe = {GetRecipe}
             />
-            {showRes && <AIRecipe recipe={recipe}/>}
+            {recipe && <AIRecipe recipe={recipe}/>}
         </main>
     )
 }
