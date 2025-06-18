@@ -7,11 +7,27 @@ export default function Main() {
 
     const [ingredients, setIngredients] = useState([])
     const [recipe, setRecipe] = useState()
+    const [errorMessage, setErrorMessage] = useState("")
 
     function addIngredient(formData) {
-        const newIngredient = formData.get("ingredient")
-        setIngredients(prev => [...prev, newIngredient])
+    const newIngredient = formData.get("ingredient")?.trim()
+    if (!newIngredient) {
+        setErrorMessage("Please enter a valid ingredient.")
+        setTimeout(() => setErrorMessage(""), 3000)
+        return
     }
+
+    setIngredients(prev => {
+        const alreadyExists = prev.some(i => i.toLowerCase() === newIngredient.toLowerCase())
+        if (alreadyExists) {
+            setErrorMessage(`"${newIngredient}" is already in the list.`)
+            setTimeout(() => setErrorMessage(""), 3000)
+            return prev
+        }
+        return [...prev, newIngredient]
+    })
+}
+
 
     function removeIngredient(ingredientToRemove) {
         setIngredients(prev => prev.filter(ingredient => ingredient !== ingredientToRemove))
@@ -45,6 +61,7 @@ export default function Main() {
             removeIngredient= {removeIngredient}
             removeAllIngredient= {removeAllIngredient}
             />
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
             {recipe && <AIRecipe recipe={recipe}/>}
         </main>
     )
