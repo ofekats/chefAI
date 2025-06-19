@@ -93,16 +93,18 @@ export default function Main() {
     
     return (
         <main>
-            <form action={addIngredient} className="add-ingredient-form">
-                <input
-                    type="text"
-                    placeholder="e.g. oregano"
-                    aria-label="Add ingredient"
-                    name="ingredient"
-                />
-                <button>Add ingredient</button>
-            </form>
-            <p className="instructions">you need at least 4 ingredients </p>
+            <div className="form-container">
+                <form action={addIngredient} className="add-ingredient-form">
+                    <input
+                        type="text"
+                        placeholder="e.g. oregano"
+                        aria-label="Add ingredient"
+                        name="ingredient"
+                    />
+                    <button>Add ingredient</button>
+                </form>
+                <p className="instructions">you need at least 4 ingredients </p>
+            </div>
             <IngredientsList
             ingredients = {ingredients}
             GetRecipe = {GetRecipe}
