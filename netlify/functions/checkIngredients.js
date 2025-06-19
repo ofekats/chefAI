@@ -9,7 +9,11 @@ async function checkIngredientWithAPI(ingredient) {
   )}&number=1&apiKey=${SPOONACULAR_API_KEY}`;
 
   const res = await fetch(url);
-  if (!res.ok) throw new Error("Spoonacular API error");
+  if (!res.ok) {
+  const errorText = await res.text();
+  console.log("Spoonacular API Error Response:", errorText);
+  throw new Error("Spoonacular API error");
+}
   const json = await res.json();
 
   if (json.results && json.results.length > 0) {
