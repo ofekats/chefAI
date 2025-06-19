@@ -101,7 +101,7 @@ export default function Main() {
             />
             {isLoading && (
             <div className="loading-overlay">
-                <img src="/images/cookingAnimation.gif" alt="Loading..." />
+                <img src="/public/images/cookingAnimation.gif" alt="Loading..." />
             </div>
             )}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
