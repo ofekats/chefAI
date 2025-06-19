@@ -41,6 +41,12 @@ export async function handler(event) {
 
       if (valid) {
         const corrected = valid.correctedName;
+        if(!corrected){
+            return {
+            statusCode: 500,
+            body: JSON.stringify({ error: err.message }),
+            };
+        }
         if (corrected !== lowerIng) {
             corrections[lowerIng] = corrected;
         }
