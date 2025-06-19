@@ -9,6 +9,7 @@ async function checkIngredientWithAPI(ingredient) {
   )}&number=1&apiKey=${SPOONACULAR_API_KEY}`;
 
   const res = await fetch(url);
+  const json = await res.json();
   if (!res.ok) {
     if (res.status === 402 && json.message?.includes("daily points limit")) {
       const error = new Error("Spoonacular API daily limit reached");
@@ -17,7 +18,7 @@ async function checkIngredientWithAPI(ingredient) {
     }
     throw new Error("Spoonacular API error");
   }
-  const json = await res.json();
+  
 
   if (json.results && json.results.length > 0) {
     const firstResult = json.results[0];
