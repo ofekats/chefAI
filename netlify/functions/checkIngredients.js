@@ -44,7 +44,7 @@ export async function handler(event) {
         if(!corrected){
             return {
             statusCode: 500,
-            body: JSON.stringify({ error: err.message }),
+            body: JSON.stringify({ error: "ingredient undefined in the API" }),
             };
         }
         if (corrected !== lowerIng) {
