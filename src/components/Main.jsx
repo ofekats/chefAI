@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import AIRecipe from "./AIRecipe"
 import IngredientsList from "./IngredientsList"
-import getRecipeFromMistral from "../getRecipe"
+import getRecipeFromMistral, { checkIngredients } from "../getRecipe"
 
 export default function Main() {
 
@@ -48,7 +48,12 @@ export default function Main() {
 
     async function GetRecipe(){
         setIsLoading(true)
-        setRecipe(await getRecipeFromMistral(ingredients))
+        if(await checkIngredients(ingredients) === "YES"){
+            setRecipe(await getRecipeFromMistral(ingredients))
+        }else{
+            setErrorMessage("Please enter a valid list of ingredients.")
+            setTimeout(() => setErrorMessage(""), 5000)
+        }
         setIsLoading(false)
     }
 
@@ -64,6 +69,7 @@ export default function Main() {
                 />
                 <button>Add ingredient</button>
             </form>
+            <p className="instructions">you need at least 4 ingredients </p>
             <IngredientsList
             ingredients = {ingredients}
             GetRecipe = {GetRecipe}

@@ -66,6 +66,11 @@ main {
   margin-right: 5px;
 }
 
+.instructions{
+  margin-left: 23%;
+  font-size: 0.875rem;
+}
+
 ul.ingredients-list {
   margin-bottom: 48px;
 }
@@ -151,7 +156,7 @@ ul.ingredients-list > li {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #e8e3e3;
+  background-color: #D17557;
   color: #000;
   padding: 12px 20px;
   border-radius: 8px;

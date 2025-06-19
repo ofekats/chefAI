@@ -15,7 +15,6 @@ but try not to include too many extra ingredients. Format your response in markd
 
 
 export async function handler(event) {
-    console.log("here")
   try {
     console.log("ingredients:", event.body)
     const { ingredients } = JSON.parse(event.body || "{}")
@@ -38,7 +37,7 @@ export async function handler(event) {
 
   } catch (err) {
     console.log("trying again with a diffrent model")
-    console.warn('Hugging Face failed, trying Cohere fallback:', err)
+    console.warn('Hugging Face failed, trying Cohere fallback:')
     try {
       const { ingredients } = JSON.parse(event.body || '{}')
       const ingredientsString = ingredients.join(', ')
@@ -64,7 +63,7 @@ Please provide a recipe.`,
       })
 
       const recipeText = cohereResponse.generations?.[0]?.text || "No recipe returned";
-      console.log(recipeText)
+      console.log("recipe:", recipeText)
       return {
         statusCode: 200,
         body: JSON.stringify({ recipe: recipeText }),
