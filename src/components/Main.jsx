@@ -45,15 +45,38 @@ export default function Main() {
         setIngredients([])
     }
 
+    function updateIngredient(oldIng, newIng) {
+        setIngredients(prev =>
+            prev.map(ing => (ing === oldIng ? newIng : ing))
+        );
+    }
+
 
     async function GetRecipe(){
         setIsLoading(true)
-        if(await checkIngredients(ingredients) === "YES"){
-            setRecipe(await getRecipeFromMistral(ingredients))
-        }else{
-            setErrorMessage("Please enter a valid list of ingredients.")
-            setTimeout(() => setErrorMessage(""), 5000)
+        try {
+        const res = await checkIngredients(ingredients);
+        const answer = res.answer;
+
+        if (res.corrections) {
+            console.log(res.corrections)
+            for (const [original, corrected] of Object.entries(res.corrections)) {
+                updateIngredient(original, corrected);
+            }
         }
+
+        if (answer === "YES") {
+            const recipe = await getRecipeFromMistral(ingredients);
+            setRecipe(recipe);
+        } else {
+            setErrorMessage("Please enter a valid list of ingredients.");
+            setTimeout(() => setErrorMessage(""), 5000);
+        }
+    } catch (err) {
+        console.error(err);
+        setErrorMessage("Something went wrong. Please try again.");
+        setTimeout(() => setErrorMessage(""), 5000);
+    }
         setIsLoading(false)
     }
 

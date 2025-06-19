@@ -15,5 +15,5 @@ export async function checkIngredients(ingredientsArr) {
       body: JSON.stringify({ ingredients: ingredientsArr })
     })
     const data = await res.json()
-    return data.answer
+    return data
   }  

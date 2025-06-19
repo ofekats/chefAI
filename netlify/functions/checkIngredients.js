@@ -40,7 +40,7 @@ async function checkIngredientWithAPI(ingredient) {
 export async function handler(event) {
   try {
     const { ingredients } = JSON.parse(event.body);
-    
+    const corrections = {};
     if (!Array.isArray(ingredients) || ingredients.length === 0) {
       return {
         statusCode: 400,
@@ -55,22 +55,32 @@ export async function handler(event) {
     for (const ing of ingredients) {
       const lowerIng = ing.toLowerCase();
 
-      if (localIngredients[lowerIng]) continue;
+      if (localIngredients[lowerIng]) {
+        console.log(lowerIng, "already in the ingredient file")
+        continue;
+    }
 
       const valid = await checkIngredientWithAPI(lowerIng);
 
       if (valid) {
         const corrected = valid.correctedName;
         localIngredients[corrected] = true;
+        if (corrected !== lowerIng) {
+            corrections[lowerIng] = corrected;
+        }
       } else {
         allValid = false;
         break;
       }
     }
+    console.log("corrections:",corrections)
     await writeIngredientsFile(localIngredients);
     return {
       statusCode: 200,
-      body: JSON.stringify({ answer: allValid ? "YES" : "NO" }),
+      body: JSON.stringify({
+        answer: allValid ? "YES" : "NO",
+        corrections,
+        }),
     };
   } catch (err) {
     console.log(err)
