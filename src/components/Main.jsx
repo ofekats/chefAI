@@ -56,6 +56,16 @@ export default function Main() {
         setIsLoading(true)
         try {
         const res = await checkIngredients(ingredients);
+        if (res.error && res.error.includes("daily limit")) {
+        setErrorMessage("Sorry, the Spoonacular API daily limit has been reached. Please try again later.");
+        setIsLoading(false);
+        return;
+        }
+        if (res.error) {
+        setErrorMessage("Sorry, try again later.");
+        setIsLoading(false);
+        return;
+        }
         const answer = res.answer;
 
         if (res.corrections) {

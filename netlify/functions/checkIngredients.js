@@ -10,10 +10,13 @@ async function checkIngredientWithAPI(ingredient) {
 
   const res = await fetch(url);
   if (!res.ok) {
-  const errorText = await res.text();
-  console.log("Spoonacular API Error Response:", errorText);
-  throw new Error("Spoonacular API error");
-}
+    if (res.status === 402 && json.message?.includes("daily points limit")) {
+      const error = new Error("Spoonacular API daily limit reached");
+      error.code = 402;
+      throw error;
+    }
+    throw new Error("Spoonacular API error");
+  }
   const json = await res.json();
 
   if (json.results && json.results.length > 0) {
@@ -68,7 +71,16 @@ export async function handler(event) {
         }),
     };
   } catch (err) {
-    console.log(err)
+    if (err.code === 402) {
+      return {
+        statusCode: 503, // 503 Service Unavailable
+        body: JSON.stringify({
+          error: "Sorry, the Spoonacular API daily limit has been reached. Please try again later.",
+        }),
+      };
+    }
+
+    console.log(err);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message }),
