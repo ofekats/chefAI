@@ -62,7 +62,7 @@ export default function Main() {
         return;
         }
         if (res.error && res.error.includes("undefined in the API")) {
-        setErrorMessage(res.error + "\nPlease enter a valid ingredient.");
+        setErrorMessage(res.error + "<br />Please enter a valid ingredient.");
         setIsLoading(false);
         return;
         }
