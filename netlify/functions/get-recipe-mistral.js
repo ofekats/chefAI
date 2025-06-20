@@ -58,7 +58,7 @@ Please return the recipe with the following markdown structure:
 
 The ingredients are: ${ingredientsString}
 Please provide a recipe.`,
-        max_tokens: 300,
+        max_tokens: 800,
         temperature: 0.7,
       })
 
