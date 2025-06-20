@@ -18,6 +18,9 @@ export default function Main() {
   }, [recipe]);
 
     function addIngredient(formData) {
+        if (errorMessage.includes("Please enter a valid ingredient")) {
+            setErrorMessage("")
+        }
     const newIngredient = formData.get("ingredient")?.trim()
     if (!newIngredient) {
         setErrorMessage("Please enter a valid ingredient.")
