@@ -53,6 +53,7 @@ export default function Main() {
 
 
     async function GetRecipe(){
+        setErrorMessage("")
         setIsLoading(true)
         try {
         const res = await checkIngredients(ingredients);
