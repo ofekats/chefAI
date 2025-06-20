@@ -63,7 +63,7 @@ export default function Main() {
         return;
         }
         if (res.error && res.error.includes("undefined in the API")) {
-        setErrorMessage(res.error + "<br />Please enter a valid ingredient.");
+        setErrorMessage(res.error + "\nPlease enter a valid ingredient.");
         setIsLoading(false);
         return;
         }
@@ -122,7 +122,7 @@ export default function Main() {
                 <img src="/images/cookingAnimation.gif" alt="Loading..." />
             </div>
             )}
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {errorMessage && <pre className="error-message">{errorMessage}</pre>}
             <div ref={resultRef}>
                 {recipe && <AIRecipe recipe={recipe} />}
             </div>
