@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 import AIRecipe from "./AIRecipe"
 import IngredientsList from "./IngredientsList"
-import getRecipeFromMistral, { checkIngredients } from "../getRecipe"
+import getRecipeFromMistral, { checkIngredients, getImageFromRecipe, extractTitle } from "../getRecipe"
 
 export default function Main() {
 
@@ -9,6 +9,7 @@ export default function Main() {
     const [recipe, setRecipe] = useState()
     const [errorMessage, setErrorMessage] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [imageUrl, setImageUrl] = useState()
     const resultRef = useRef(null);
 
     useEffect(() => {
@@ -61,19 +62,19 @@ export default function Main() {
         try {
         const res = await checkIngredients(ingredients);
         if (res.error && res.error.includes("daily limit")) {
-        setErrorMessage("Sorry, the Spoonacular API daily limit has been reached. Please try again later.");
-        setIsLoading(false);
-        return;
+            setErrorMessage("Sorry, the Spoonacular API daily limit has been reached. Please try again later.");
+            setIsLoading(false);
+            return;
         }
         if (res.error && res.error.includes("undefined in the API")) {
-        setErrorMessage(res.error + "\nPlease enter a valid ingredient.");
-        setIsLoading(false);
-        return;
+            setErrorMessage(res.error + "\nPlease enter a valid ingredient.");
+            setIsLoading(false);
+            return;
         }
         if (res.error) {
-        setErrorMessage("Sorry, try again later.");
-        setIsLoading(false);
-        return;
+            setErrorMessage("Sorry, try again later.");
+            setIsLoading(false);
+            return;
         }
         const answer = res.answer;
 
@@ -87,6 +88,12 @@ export default function Main() {
         if (answer === "YES") {
             const recipe = await getRecipeFromMistral(ingredients);
             setRecipe(recipe);
+            const title = extractTitle(recipe);
+            const imagePrompt = `A delicious dish called "${title}"`;
+            const URL = await getImageFromRecipe(imagePrompt);
+            if(URL) {
+                setImageUrl(URL);
+            }
         } else {
             setErrorMessage("Please enter a valid list of ingredients.");
             setTimeout(() => setErrorMessage(""), 5000);
@@ -129,6 +136,7 @@ export default function Main() {
             <div ref={resultRef}>
                 {recipe && <AIRecipe recipe={recipe} />}
             </div>
+            {imageUrl && <img src={imageUrl} alt="AI generated recipe image" />}
         </main>
     )
 }
