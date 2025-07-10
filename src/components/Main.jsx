@@ -88,8 +88,11 @@ export default function Main() {
         if (answer === "YES") {
             const recipe = await getRecipeFromMistral(ingredients);
             setRecipe(recipe);
+            setIsLoading(false);
+            console.log("recipe:", recipe);
             const title = extractTitle(recipe);
-            const imagePrompt = `A delicious dish called "${title}"`;
+            console.log("title:", title);
+            const imagePrompt = `${title}`;
             const URL = await getImageFromRecipe(imagePrompt);
             if(URL) {
                 setImageUrl(URL);
@@ -136,7 +139,7 @@ export default function Main() {
             <div ref={resultRef}>
                 {recipe && <AIRecipe recipe={recipe} />}
             </div>
-            {imageUrl && <img src={imageUrl} alt="AI generated recipe image" />}
+            {imageUrl && <img src={imageUrl} alt="AI generated recipe image" className="recipe-image"/>}
         </main>
     )
 }
