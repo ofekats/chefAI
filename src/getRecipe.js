@@ -20,7 +20,6 @@ export async function checkIngredients(ingredientsArr) {
 
 
 export async function getImageFromRecipe(prompt) {
-  console.log("prompt:", prompt)
   const res = await fetch("/.netlify/functions/getImage", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -40,7 +39,6 @@ export function extractTitle(recipeText) {
   for (const line of lines) {
     const trimmed = line.trim();
     if (trimmed.startsWith('#') || trimmed.startsWith('**')) {
-      console.log("returning:", line.replace('# ', '').replace('*', '').trim())
       return line.replace('# ', '').replaceAll('*', '').trim();
     }
   }

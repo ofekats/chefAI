@@ -89,9 +89,7 @@ export default function Main() {
             const recipe = await getRecipeFromMistral(ingredients);
             setRecipe(recipe);
             setIsLoading(false);
-            console.log("recipe:", recipe);
             const title = extractTitle(recipe);
-            console.log("title:", title);
             const imagePrompt = `${title}`;
             const URL = await getImageFromRecipe(imagePrompt);
             if(URL) {
