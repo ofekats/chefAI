@@ -187,3 +187,10 @@ ul.ingredients-list > li {
 .loading-overlay img {
   height: 150px;
 }
+
+.recipe-image {
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}

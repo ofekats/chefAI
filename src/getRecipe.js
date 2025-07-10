@@ -17,3 +17,32 @@ export async function checkIngredients(ingredientsArr) {
     const data = await res.json()
     return data
   }  
+
+
+export async function getImageFromRecipe(prompt) {
+  console.log("prompt:", prompt)
+  const res = await fetch("/.netlify/functions/getImage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt })
+  })
+  if (!res.ok) {
+    const errorData = await res.json();
+    console.error("Image generation error:", errorData);
+      return null;
+  }
+  const data = await res.json();
+  return `data:image/jpeg;base64,${data.image}`; 
+} 
+
+export function extractTitle(recipeText) {
+  const lines = recipeText.split('\n');
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('#') || trimmed.startsWith('**')) {
+      console.log("returning:", line.replace('# ', '').replace('*', '').trim())
+      return line.replace('# ', '').replaceAll('*', '').trim();
+    }
+  }
+  return '';
+}

@@ -14,7 +14,8 @@
     "cohere-ai": "^7.17.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "replicate": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
