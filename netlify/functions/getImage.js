@@ -1,4 +1,6 @@
-import fetch from "node-fetch";
+import { InferenceClient } from "@huggingface/inference";
+
+const hf = new InferenceClient(process.env.HF_ACCESS_TOKEN);
 
 export async function handler(event) {
   try {
@@ -8,57 +10,49 @@ export async function handler(event) {
     console.log("Received prompt:", prompt);
 
     if (!prompt) {
-      console.log("No prompt provided in request body");
       return {
         statusCode: 400,
         body: JSON.stringify({ error: "No prompt provided" }),
       };
     }
 
-    const apiUrl = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev";
+    // מודל חינמי יותר של Hugging Face
+    const model = "stabilityai/stable-diffusion-2";
 
-    console.log("Sending request to external API:", apiUrl);
+    console.log("Sending request to model:", model);
 
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.HF_ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
+    const imageBytes = await hf.textToImage({
+      model,
+      inputs: prompt,
+      parameters: {
+        width: 512,
+        height: 512,
+        guidance_scale: 7.5,
       },
-      body: JSON.stringify({ inputs: prompt }),
     });
 
-    console.log("External API response status:", response.status);
+    console.log("Received image bytes length:", imageBytes.byteLength);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Error response from external API:", errorText);
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: errorText }),
-      };
-    }
-
-    const imageBuffer = await response.arrayBuffer();
-    console.log("Received image buffer of length:", imageBuffer.byteLength);
-
-    const base64Image = Buffer.from(imageBuffer).toString("base64");
+    const base64Image = Buffer.from(imageBytes).toString("base64");
 
     return {
-  statusCode: 200,
-  body: JSON.stringify({
-    image: base64Image,
-  }),
-};
-
-
+      statusCode: 200,
+      body: JSON.stringify({ image: base64Image }),
+    };
   } catch (error) {
     console.error("Unexpected error in getImage handler:", error);
+
+    // טיפול בשגיאות קרדיטים או מודל שלא נמצא
+    let errorMessage = error.message || error.toString();
+    if (error?.httpResponse?.body?.error) {
+      errorMessage = error.httpResponse.body.error;
+    }
+
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: "Unexpected server error",
-        details: error.message || error.toString(),
+        error: "Failed to generate image",
+        details: errorMessage,
       }),
     };
   }

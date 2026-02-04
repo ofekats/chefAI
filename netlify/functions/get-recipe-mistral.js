@@ -42,9 +42,29 @@ export async function handler(event) {
       const { ingredients } = JSON.parse(event.body || '{}')
       const ingredientsString = ingredients.join(', ')
 
-      const cohereResponse = await cohere.generate({
-        model: 'command-r-plus',
-        prompt: `
+//       const cohereResponse = await cohere.generate({
+//         model: 'command-r-plus',
+//         prompt: `
+// You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. 
+// You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, 
+// but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page.
+
+// Please return the recipe with the following markdown structure:
+// ### Recipe Title
+// #### Ingredients
+// - ...
+// #### Instructions
+// 1. ...
+
+// The ingredients are: ${ingredientsString}
+// Please provide a recipe.`,
+//         max_tokens: 800,
+//         temperature: 0.7,
+//       })
+console.log("brfore response")
+  const cohereResponse = await cohere.chat({
+  model: 'command-xlarge-nightly',
+  message: `
 You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. 
 You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, 
 but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page.
@@ -56,13 +76,16 @@ Please return the recipe with the following markdown structure:
 #### Instructions
 1. ...
 
-The ingredients are: ${ingredientsString}
-Please provide a recipe.`,
-        max_tokens: 800,
-        temperature: 0.7,
-      })
+The ingredients are: ${ingredientsString}. Please provide a recipe.
+`,
+  max_tokens: 800,
+  temperature: 0.7,
+})
 
-      const recipeText = cohereResponse.generations?.[0]?.text || "No recipe returned";
+      console.log("after response")
+      console.log("cohereResponse:", cohereResponse)
+      // const recipeText = cohereResponse.generations?.[0]?.text || "No recipe returned";
+      const recipeText = cohereResponse.text || "No recipe returned";
       console.log("recipe:", recipeText)
       return {
         statusCode: 200,

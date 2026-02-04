@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@huggingface/inference": "^4.0.5",
-    "cohere-ai": "^7.17.1",
+    "cohere-ai": "^7.20.0",
+    "node-fetch": "^2.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
