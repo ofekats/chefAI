@@ -137,7 +137,16 @@ export default function Main() {
             <div ref={resultRef}>
                 {recipe && <AIRecipe recipe={recipe} />}
             </div>
-            {imageUrl && <img src={imageUrl} alt="AI generated recipe image" className="recipe-image"/>}
+            {imageUrl && (
+                <img
+                    src={`data:image/jpeg;base64,${imageUrl}`}
+                    alt="AI generated recipe image"
+                    className="recipe-image"
+                />
+                )}
+
+
+
         </main>
     )
 }

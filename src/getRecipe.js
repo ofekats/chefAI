@@ -19,20 +19,44 @@ export async function checkIngredients(ingredientsArr) {
   }  
 
 
+// export async function getImageFromRecipe(prompt) {
+//   const res = await fetch("/.netlify/functions/getImage", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ prompt })
+//   })
+//   if (!res.ok) {
+//     const errorData = await res.json();
+//     console.error("Image generation error:", errorData);
+//       return null;
+//   }
+//   const data = await res.json();
+//   console.log("image data:", data.imageUrl)
+//   // if (!data.image || typeof data.image !== "string") {
+//   //   console.error("No image returned from API:", data);
+//   //   return null;
+//   // }
+
+//   return data.imageUrl; 
+// } 
 export async function getImageFromRecipe(prompt) {
   const res = await fetch("/.netlify/functions/getImage", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt })
-  })
+    body: JSON.stringify({ prompt }),
+  });
+
   if (!res.ok) {
     const errorData = await res.json();
     console.error("Image generation error:", errorData);
-      return null;
+    return null;
   }
+
   const data = await res.json();
-  return `data:image/jpeg;base64,${data.image}`; 
-} 
+  return data.image;  // זה כבר Base64
+}
+
+
 
 export function extractTitle(recipeText) {
   const lines = recipeText.split('\n');
